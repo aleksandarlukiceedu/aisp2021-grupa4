@@ -1,31 +1,31 @@
 package list;
 
-public class ListNode {
-    private Object element;
-    private ListNode next;
+public class ListNode<T> {
+    private T element;
+    private ListNode<T> next;
 
-    public ListNode(Object element){
+    public ListNode(T element){
         this.element = element;
     }
 
-    public ListNode(Object element, ListNode next){
+    public ListNode(T element, ListNode<T> next){
         this.element = element;
         this.next = next;
     }
 
-    public Object getElement() {
+    public T getElement() {
         return element;
     }
 
-    public void setElement(Object element) {
+    public void setElement(T element) {
         this.element = element;
     }
 
-    public ListNode getNext() {
+    public ListNode<T> getNext() {
         return next;
     }
 
-    public void setNext(ListNode next) {
+    public void setNext(ListNode<T> next) {
         this.next = next;
     }
 }

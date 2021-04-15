@@ -1,12 +1,14 @@
 package list;
 
-public class LinkedList {
-    private ListNode head;
-    private ListNode tail;
+import java.util.Iterator;
+
+public class LinkedList<T> implements Iterable<T> {
+    private ListNode<T> head;
+    private ListNode<T> tail;
     private int listSize;
 
-    public void addFirst(Object element){
-        ListNode newNode = new ListNode(element, head);
+    public void addFirst(T element){
+        ListNode<T> newNode = new ListNode<T>(element, head);
         head = newNode;
 
         if(tail == null){
@@ -16,8 +18,8 @@ public class LinkedList {
         listSize++;
     }
 
-    public void addLast(Object element){
-        ListNode newNode = new ListNode(element);
+    public void addLast(T element){
+        ListNode<T> newNode = new ListNode<T>(element);
 
         if(tail == null){
             head = newNode;
@@ -31,24 +33,32 @@ public class LinkedList {
         listSize++;
     }
 
-    public void add(int index, Object element){
+    public void add(int index, T element){
 
     }
 
-    public Object getFirst(){
-        return null;
+    public T getFirst(){
+       if(head == null){
+           throw new RuntimeException("List is empty!");
+       }
+
+       return head.getElement();
     }
 
-    public Object getLast() {
-        return null;
+    public T getLast() {
+        if(tail == null){
+            throw new RuntimeException("List is empty!");
+        }
+
+        return tail.getElement();
     }
 
-    public Object get(int index){
+    public T get(int index){
         if(index < 0 || index >= listSize){
             throw new IndexOutOfBoundsException("Index out of range!");
         }
         int i = 0;
-        ListNode currentNode = head;
+        ListNode<T> currentNode = head;
 
 
         while (currentNode != null){
@@ -62,35 +72,77 @@ public class LinkedList {
         return null;
     }
 
-    public int indexOf(Object element){
+    public int indexOf(T element){
         return -1;
     }
 
     public void removeFirst(){
-
+        if(head != null){
+            if(head == tail){
+                head = null;
+                tail = null;
+            }
+            else{
+                head = head.getNext();
+            }
+            listSize--;
+        }
+        else{
+            throw new RuntimeException("List is empty!");
+        }
     }
 
     public void removeLast(){
+        if(head == null){
+            throw new RuntimeException("List is empty!");
+        }
 
+        ListNode<T> previousNode = null;
+        ListNode<T> currentNode = head;
+
+        while(currentNode.getNext() != null){
+            previousNode = currentNode;
+            currentNode = currentNode.getNext();
+        }
+
+        if(previousNode == null){
+            head = null;
+            tail = null;
+        }
+        else{
+            previousNode.setNext(null);
+            tail = previousNode;
+        }
+
+        listSize--;
     }
 
     public void remove(int index){
 
     }
 
-    public void remove(Object element){
+    public void remove(T element){
 
     }
 
-    public void set(int index, Object element){
+    public void set(int index, T element){
 
     }
 
     public void clear(){
-
+        head = tail = null;
     }
 
     public int size(){
         return listSize;
+    }
+
+    ListNode<T> getHead(){
+        return head;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator<T>(this);
     }
 }
